@@ -68,28 +68,19 @@ class Query_Model extends CI_Model{
 
 /* START - CONTROLLER: Companies */
 
-        function CompanyList(){
+        function ListaProductos(){
 
                 $this->db->select('*');
-                $this->db->from('companies');
+                $this->db->from('productos');
                 $query = $this->db->get();
                 return $query->result();
         }
 
-        function SelectActiveCompanies(){
+        function SeleccionaPorClave($ClaveProducto){
 
                 $this->db->select('*');
-                $this->db->from('companies');
-                $this->db->where("status",'1');
-                $query = $this->db->get();
-                return $query->result(); 
-        }
-
-        function SelectByCompanyDB($CompanyName){
-
-                $this->db->select('*');
-                $this->db->from('companies');
-                $this->db->where('name',$CompanyName);
+                $this->db->from('productos');
+                $this->db->where('clave',$ClaveProducto);
                 $query = $this->db->get();
                 return $query->result();
         }

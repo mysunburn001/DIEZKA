@@ -10,21 +10,21 @@ class Productos extends MY_Controller {
     public function index(){
         $data['tabTitle'] = "DIEZKA - Productos";
         $data['pagecontent'] = "productos/productos";
-        //$data['productos'] = $this->Query_Model->ListaProductos();
+        $data['productos'] = $this->Query_Model->ListaProductos();
         
         $this->loadpageintotemplate($data);
        
    }
 
-   /*public function CheckExistingCompanyPHP(){
+   public function RevisaClaveExistenteC(){
 
-    $CompanyName = $this->input->post("CompanyName");
-    $Result = $this->Query_Model->SelectByCompanyDB($CompanyName);
-    echo json_encode($Result);
+    $ClaveProducto = $this->input->post("ClaveProducto");
+    $Resultado = $this->Query_Model->SeleccionaPorClave($ClaveProducto);
+    echo json_encode($Resultado);
 
    }
 
-   public function SaveCompanyPHP(){
+   /*public function SaveCompanyPHP(){
 
         $CompanyName = $this->input->post("CompanyName");
         $Category = $this->input->post("Category");

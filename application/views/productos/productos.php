@@ -1,13 +1,12 @@
     <!-- Content Wrapper. Contains page content -->
      
-     <?php
+    <?php
      /* Dependencias requeridas para el funcionamiento de la DataTable */
     /* ==============================================================
             <---  CSS TEMPLATE  --->
             ============================================================== */
     
             echo link_tag('assets/darktemplate/plugins/bootstrap-sweetalert/sweet-alert.css');
-            echo link_tag('assets/darktemplate/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css');
             
     /* ==============================================================
             <---  JS TEMPLATE  --->
@@ -15,7 +14,6 @@
 
             echo script_tag("assets/darktemplate/plugins/bootstrap-sweetalert/sweet-alert.js");
             echo script_tag("assets/darktemplate/pages/jquery.sweet-alert.init.js");
-            echo script_tag("assets/darktemplate/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js");
           
     /* ==============================================================
             <---  JS MYAPP  --->
@@ -35,18 +33,28 @@
 
         $(document).ready(function() {
 
-            $("#HiddenStatus").hide();
-            $("#ButtonEditCompany").hide();
-
-            $('#CompanyRegDate').datepicker({
-            firstDay: 1,
-            autoclose: true,
-            todayHighlight: true,
-            format: 'yyyy/mm/dd'
-          });
+            $("#EstadoEscondido").hide();
+            $("#BotonEditaProducto").hide();
+            $("#ImagenProducto").hide();
 
         });
 
+        function EncodeBase64() {
+          const preview = document.querySelector('#ImagenProducto');
+          const file = document.querySelector('input[type=file]').files[0];
+          const reader = new FileReader();
+
+          reader.addEventListener("load", () => {
+            // convert image file to base64 string
+            preview.src = reader.result;
+            var base64 = reader.result;
+            $("#ImagenProducto").show();
+          }, false);
+
+          if (file) {
+            reader.readAsDataURL(file);
+          }
+        }
 
     </script>
 
@@ -79,7 +87,7 @@
                          <div class="col-lg-12">
                           <div class="panel panel-border panel-info">
                               <div class="panel-heading">
-                                  <h3 class="panel-title">Companies</h3>
+                                  <h3 class="panel-title">Productos</h3>
                               </div>
                               <div class="table-responsive">
                                 <div class="panel-body">
@@ -92,7 +100,7 @@
 
                                         <div class="panel panel-border panel-info  col-lg-4">
                                           <div class="panel-heading">
-                                            <h3 class="panel-title">Registration</h3>
+                                            <h3 class="panel-title">Registro</h3>
                                           </div>
                                           <div class="panel-body">
 
@@ -101,58 +109,90 @@
                                             <!-- form beggins -->
 
                                             <div class="form-group">
-                                                <label for="CompanyName">Name</label>
+                                                <label for="NombreProducto">Nombre</label>
                                                 <br>
-                                                <input type="text" id="HiddenID" hidden>
-                                                <input type="text" name="CompanyName" placeholder="Name" id="CompanyName" class="form-control" onblur="CheckExistingCompany()">
+                                                <input type="text" id="IDOculto" hidden>
+                                                <input type="text" id="NombreImagen" hidden>
+                                                <input type="text" name="NombreProducto" placeholder="Nombre" id="NombreProducto" class="form-control">
                                             </div>
 
                                             <div class="form-group">
-
-                                                <label for="Category">Category</label>
+                                                <label for="DescripcionProducto">Descripcion</label>
                                                 <br>
-                                                <select id="Category" name="Category" class="form-control">
-                                                  <option value="" >Choose Category</option>
+                                                <input type="text" name="DescripcionProducto" placeholder="Descripcion" id="DescripcionProducto" class="form-control">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="ClaveProducto">Clave</label>
+                                                <br>
+                                                <input type="text" name="ClaveProducto" placeholder="Clave" id="ClaveProducto" class="form-control" onKeyPress="if (event.keyCode < 48 || event.keyCode > 57)event.returnValue = false;" onblur="RevisaClaveExistenteS()">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="PrecioProducto">Precio</label>
+                                                <br>
+                                                <input type="text" name="PrecioProducto" placeholder="Precio" id="PrecioProducto" class="form-control" onKeyPress="if (event.keyCode < 48 || event.keyCode > 57)event.returnValue = false;">
+                                            </div>
+
+                                            <div class="form-group">       
+                                              <label for="CategoriaProducto">Categoria</label>                                           
+                                              <select id="CategoriaProducto" name="CategoriaProducto" class="form-control" style="width: 300px">
+                                                <option value="" >Elije Categoria</option>
+
+                                         
+                                                                                
+                                              </select>
+                                            </div> 
+
+                                            <div class="form-group">    
+                                              <label for="SubcategoriaProducto">Subcategoria</label>                                              
+                                              <select id="SubcategoriaProducto" name="SubcategoriaProducto" class="form-control" style="width: 300px">
+                                                <option value="" >Elije Subcategoria</option>
+
+                                         
+                                                                                
+                                              </select>
+                                            </div> 
+
+                                            <div class="form-group">     
+                                              <label for="DepartamentoProducto">Departamento</label>                                           
+                                              <select id="DepartamentoProducto" name="DepartamentoProducto" class="form-control" style="width: 300px">
+                                                <option value="" >Elije Departamento</option>
+
+                                         
+                                                                                
+                                              </select>
+                                            </div> 
+
+                                            <div class="form-group">
+                                                 <label for="CapturaImagen">Imagen</label>
+                                                <input type="file" class="form-control" data-size="sm" accept=".jpg" id="CapturaImagen" onchange="EncodeBase64();">
+                                            </div> 
+
+                                            <img src="" height="250" width="250" id="ImagenProducto">
+
+                                             <div class="form-group" id="EstadoEscondido">
+                                                  <label for="EstadoProducto">Status</label>
+                                                  <select id="EstadoProducto" name="EstadoProducto" class="form-control">
+                                                  <option value="" >Elije Estado</option>
                                                     
-                                                    <option value="Textile">Textile</option>
-                                                    <option value="Automotive"> Automotive</option>
-                                                    <option value="Food">Food</option>
-                                                    <option value="Chemical"> Chemical</option>
-                                                    <option value="Technology"> Technology</option>
+                                                    <option value="1"> Activo </option>
+                                                    <option value="0"> Inactivo </option>
                                                   
 
                                                   </select>
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="CompanyRegDate">Registration Date</label>
-                                                <br>
-                                                <input type="text" class="form-control" id="CompanyRegDate" placeholder="yyyy/mm/dd " id="datepicker-autoclose" readonly="readonly">
-                                              <span class="input-group-addon bg-custom b-0 text-white"><i class="icon-calender"></i></span>
-                                            </div>
-
-                                         <div class="form-group" id="HiddenStatus">
-                                              <label for="CompanyStatus">Status</label>
-                                              <select id="CompanyStatus" name="CompanyStatus" class="form-control">
-                                              <option value="" >Choose Status</option>
-                                                
-                                                <option value="1"> Active </option>
-                                                <option value="0"> Inactive </option>
-                                              
-
-                                              </select>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div id="PreloaderCompany" hidden="true" align="center">
+                                                <div id="PreloaderProducto" hidden="true" align="center">
                                                     
-                                                    <img src="<?php echo base_url('assets/myapp/img/preloader.gif'); ?>" alt="validando...">
+                                                    <img src="<?php echo base_url('assets/myapp/img/preloader2.gif'); ?>" alt="validando...">
                                                 </div>
                                             </div>
 
-                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="VerifyCompanyContent()" id="ButtonSaveCompany">Save</button> 
+                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="VerificaContenidoProducto()" id="BotonGuardaProducto">Save</button> 
 
-                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="EditCompany()" id="ButtonEditCompany">Edit</button> 
+                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="EditaProductoS()" id="BotonEditaProducto">Edit</button> 
                                             
                                             <!-- form ends -->         
                                         </div>
@@ -165,19 +205,21 @@
                                 <div class="col-lg-8">
                                   <div class="panel panel-border panel-info">
                                       <div class="panel-heading">
-                                          <h3 class="panel-title">Company list</h3>
+                                          <h3 class="panel-title">Lista Productos</h3>
                                       </div>
                                       <div class="table-responsive">
                                         <div class="panel-body">
                                           <table id="datatable" class="table table-striped table-bordered table-responsive">
                                             <thead>
                                               <tr>
-                                                <th>Name</th>
-                                                <th>Category</th>
-                                                <th>Date</th>
-                                                <th>Status</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
+                                                <th>Nombre</th>
+                                                <th>Descripcion</th>
+                                                <th>Clave</th>
+                                                <th>Precio</th>
+                                                <th>Imagen</th>
+                                                <th>Estado</th>
+                                                <th>Editar</th>
+                                                <th>Borrar</th>
                                              
                                               </tr>
                                             </thead>
@@ -185,33 +227,39 @@
                                               
                                               <?php
 
-                                              $values = count($companies);
+                                              $values = count($productos);
                                               for ($i=0; $i < $values ; $i++) { 
-                                                $res = $companies[$i];
-                                                $id = $res -> id_company;
-                                                $name = $res -> name;
-                                                $category = $res -> category;
-                                                $date = $res -> registration_date;
-                                                $status = $res -> status;
+                                                $res = $productos[$i];
+                                                $id_producto = $res -> id_producto;
+                                                $nombre = $res -> nombre;
+                                                $descripcion = $res -> descripcion;
+                                                $clave = $res -> clave;
+                                                $precio = $res -> precio;
+                                                $imagen = $res -> imagen;  
+                                                $estado = $res -> estado;
+
+                                                $path = base_url("index.php/File/getdocument/$imagen");
 
                                                 echo "
                                                 <tr>
-                                                  <td>$name</td>
-                                                  <td>$category</td>
-                                                  <td>$date</td>";
+                                                  <td>$nombre</td>
+                                                  <td>$descripcion</td>
+                                                  <td>$clave</td>
+                                                  <td>$precio</td>
+                                                  <td align='center'><img src='$path' onmouseover='this.width=300;this.height=300;' onmouseout='this.width=100;this.height=80;' width='100' height='80' alt='fotoproducto'></td>";
 
-                                                  if ($status == 1) {
-                                                    echo "<td><span class='label label-success'>Active</span></td>";
+                                                  if ($estado == 1) {
+                                                    echo "<td><span class='label label-success'>Activo</span></td>";
                                                   }else{
-                                                    echo "<td><span class='label label-danger'>Inactive</span></td>";
+                                                    echo "<td><span class='label label-danger'>Inactivo</span></td>";
                                                   }
 
                                                   echo "<td>";
-                                                  echo "<a href='#' id='Edit' onclick='GetCompanyData($id)'><i class='fa fa-pencil'></i> </a>
+                                                  echo "<a href='#' id='Edit' onclick='ConsultaDatosProductoS($id_producto)'><i class='fa fa-pencil'></i> </a>
                                                   </td>";
 
                                                   echo "<td>";
-                                                  echo "<a href='#' id='Delete' onclick='DeleteCompany($id)'><i class='md md-close'></i> </a>
+                                                  echo "<a href='#' id='Delete' onclick='BorraProductoS($id_producto)'><i class='md md-close'></i> </a>
                                                   </td>";
 
                                               echo "</tr>";

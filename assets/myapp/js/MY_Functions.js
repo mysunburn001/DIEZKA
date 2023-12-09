@@ -61,7 +61,7 @@ function ValidateUserLogin(){
 
                     swal({   
                         title: "Error",
-                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentalo de nuevo",   
+                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
                         type: "error",   
                         showCancelButton: false,   
                         confirmButtonColor: "#DD6B55",   
@@ -177,7 +177,7 @@ function ResetUserLogin(){
 
                     swal({   
                         title: "Error",
-                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentalo de nuevo",   
+                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
                         type: "error",   
                         showCancelButton: false,   
                         confirmButtonColor: "#DD6B55",   
@@ -302,7 +302,7 @@ function RevisaTelefonoUsuario(){
 
     if (LargoTelefono<10 || LargoTelefono>10) {
 
-        swal("Error","El telefono proporcionado es mas largo o corto que 10 digitos, porfavor intentalo de nuevo","error");
+        swal("Error","El telefono proporcionado es mas largo o corto que 10 digitos, porfavor intentelo de nuevo","error");
         $("#TelefonoUsuario").val("");
     }
     
@@ -426,7 +426,7 @@ function GuardaUsuarioS(){
 
                 swal({   
                     title: "Error",
-                    text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentalo de nuevo",   
+                    text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
                     type: "error",   
                     showCancelButton: false,   
                     confirmButtonColor: "#DD6B55",   
@@ -516,7 +516,7 @@ function ConsultaDatosUsuarioS(IDUsuario){
 
                 $('#PreloaderUsuario').hide();
                 $("#BotonGuardaUsuario").attr('disabled',false);
-                swal("Error","Ha ocurrido un error interno del servidor, porfavor intentalo de nuevo","error");
+                swal("Error","Ha ocurrido un error interno del servidor, porfavor intentelo de nuevo","error");
             }
 
         });
@@ -578,7 +578,7 @@ function EditaUsuarioS(){
 
                     swal({   
                         title: "Error",
-                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentalo de nuevo",   
+                        text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
                         type: "error",   
                         showCancelButton: false,   
                         confirmButtonColor: "#DD6B55",   
@@ -678,7 +678,7 @@ function BorraUsuarioS(IDUsuario){
 
                             swal({   
                                 title: "Error",
-                                text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentalo de nuevo",   
+                                text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
                                 type: "error",   
                                 showCancelButton: false,   
                                 confirmButtonColor: "#DD6B55",   
@@ -720,38 +720,37 @@ function BorraUsuarioS(IDUsuario){
 
 /* =============================================================================================================================================================================================================================== */
 
-/* START - CONTROLLER: Companies */
+/* START - CONTROLLER: Productos */
 
-function CheckExistingCompany(){
+function RevisaClaveExistenteS(){
 
-    var CompanyName = $("#CompanyName").val();
+    var ClaveProducto = $("#ClaveProducto").val();
 
-    if(CompanyName!=""){
+    if(ClaveProducto!=""){
 
         $.ajax({
-            url:myBase_url+"index.php/Company/CheckExistingCompanyPHP",
+            url:myBase_url+"index.php/Productos/RevisaClaveExistenteC",
             type:"POST",
-            data:{CompanyName:CompanyName},
+            data:{ClaveProducto:ClaveProducto},
             async:true,
             success:function(datos){
 
-                var Object = JSON.parse(datos);
+                var object = JSON.parse(datos);
 
-                if(Object!=""){
+                if(object!=""){
 
-                    swal("Error","The company name is already registered","error");
-                    $("#CompanyName").val("");
+                    swal("Error","La clave del producto ya esta en uso, porfavor intente con una nueva","error");
+                    $("#ClaveProducto").val("");
                 }
 
 
             },error:function(){
 
-                swal("Error","An internal server error has ocurred","error");
+                swal("Error","Ha ocurrido un error interno del servidor, porfavor intentelo de nuevo","error");
             }
 
         });
     }
-
 
 }
 
