@@ -36,23 +36,23 @@
                     <!--- Divider -->
                     <div id="sidebar-menu" >
                         <ul id="todo">
-                            <li class="text-muted menu-title" style="color:black;">Menu</li>
+                            <li class="text-muted menu-title">Menu</li>
 
                             <li class="has_sub" id="home">
-                                <a href="<?= base_url('index.php/Dashboard/');?>" class="waves-effect waves-light" style="color:black;"><i class="fa fa-bank "></i><span>Home</span> </a>
+                                <a href="<?= base_url('index.php/Dashboard/');?>" class="waves-effect waves-light" ><i class="fa fa-bank "></i><span>Home</span> </a>
                             </li>
 
                             <li class="has_sub" id="companies">
-                                <a href="<?= base_url('index.php/Productos/');?>" class="waves-effect waves-light" style="color:black;" id="clickcompany"><i class="fa fa-industry "></i><span>Productos</span> </a>
+                                <a href="<?= base_url('index.php/Productos/');?>" class="waves-effect waves-light" id="clickcompany"><i class="fa fa-industry "></i><span>Productos</span> </a>
                             </li>
 
                             <!--<li class="has_sub" id="reports">
-                                <a href="#" class="waves-effect waves-light" style="color:black;"><i class="glyphicon glyphicon-list-alt"></i><span class=" fa fa-unsorted pull-right"></span><span>Reportes </span></a>
+                                <a href="#" class="waves-effect waves-light" ><i class="glyphicon glyphicon-list-alt"></i><span class=" fa fa-unsorted pull-right"></span><span>Reportes </span></a>
 
                                  <ul class="list-unstyled">
                                     
                                     <li id="report1">
-                                        <a href="<?= base_url('index.php/Reportes/Reporte1');?>" style="color:black;">
+                                        <a href="<?= base_url('index.php/Reportes/Reporte1');?>" >
                                         <i class="md md-people"></i>
                                         Reporte 1</a>
                                     </li>  
@@ -61,7 +61,7 @@
                             </li>-->
 
                             <li class="has_sub" id="users">
-                                <a href="<?= base_url('index.php/Usuarios/');?>" class="waves-effect waves-light" style="color:black;"><i class="fa fa-user "></i><span>Usuarios</span> </a>
+                                <a href="<?= base_url('index.php/Usuarios/');?>" class="waves-effect waves-light" ><i class="fa fa-user "></i><span>Usuarios</span> </a>
                             </li>
 
                         </ul>

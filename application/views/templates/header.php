@@ -18,7 +18,7 @@
             <div class="topbar-left" ><!-- LOGO -->
                         <div class="text-center">
                             
-                            <a href="#" class="logo"><img src="<?php echo base_url('assets/myapp/img/user.jpg'); ?>" alt="user-img" class="img-circle" height="50px" width="50px"></a>
+                            <!--<a href="#" class="logo"><img src="<?php echo base_url('assets/myapp/img/user.jpg'); ?>" alt="user-img" class="img-circle" height="50px" width="50px"></a>-->
                             
                         </div>
                     </div>

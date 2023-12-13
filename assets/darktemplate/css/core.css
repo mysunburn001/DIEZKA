@@ -1147,7 +1147,7 @@ pre {
   display: none;
 }
 .navbar-default {
-  background-color: #FFC0CB;
+  background-color: #ffffff;
   border-radius: 0px;
   border: none;
   margin-bottom: 0px;
@@ -1280,7 +1280,7 @@ pre {
   z-index: 2;
 }
 .side-menu.left {
-  background: #00BFFF;
+  background: #36404a;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   position: absolute;
   top: 60px;
