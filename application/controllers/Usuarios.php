@@ -16,6 +16,26 @@ class Usuarios extends MY_Controller {
        
    }
 
+   function GuardaCambioUC(){
+
+        $Cambio = $this->input->post("Cambio");
+        $Origen = $this->input->post("Origen");
+        $Contenido = $this->input->post("Contenido");
+        $Usuario = $this->session->userdata('user');
+        date_default_timezone_set('America/Mexico_City');
+        $FechaHoraActual = date('Y-m-d H:i:s');
+    
+        $DatosCambio = array(
+            'cambio' => $Cambio, 
+            'origen' => $Origen, 
+            'contenido' => $Contenido,
+            'usuario' => $Usuario,
+            'fecha_cambio' => $FechaHoraActual,
+        );
+    
+        $this->Query_Model->InsertaCambio($DatosCambio);
+   }
+
    function GuardaErrorUC(){
 
         $CodigoError = $this->input->post("CodigoError");
@@ -126,10 +146,13 @@ class Usuarios extends MY_Controller {
 
    }
 
-   /*public function DeleteUserPHP(){
+   public function BorraUsuarioC(){
 
-        $UserID = $this->input->post("UserID");
-        $Result = $this->Query_Model->DeleteUserDB($UserID);
-   }*/
+        $IDUsuario = $this->input->post("IDUsuario");
+        $this->Query_Model->BorraUsuarioBD($IDUsuario);
+        $Resultado = $this->Query_Model->SeleccionaUsuarioPorID($IDUsuario);
+        $NUsuario = $Resultado[0] -> username;
+        echo json_encode($NUsuario);
+   }
 
 }

@@ -6,16 +6,11 @@ class Query_Model extends CI_Model{
 
 /* START - CONTROLLER: Dashboard */
 
-        function InsertaError($DatosError){
-
-                $this->db->insert("errores",$DatosError);
-        }
-
 /* END - CONTROLLER: Dashboard */
 
 /* =============================================================================================================================================================================================================================== */
 
-/* START - CONTROLLER: Users */
+/* START - CONTROLLER: Usuarios */
 
         function ListaUsuarios(){
 
@@ -57,16 +52,16 @@ class Query_Model extends CI_Model{
 
         }
 
-        function DeleteUserDB($UserID){
+        function BorraUsuarioBD($IDUsuario){
 
-                $this->db->where('id_usuario',$UserID);
+                $this->db->where('id_usuario',$IDUsuario);
                 $this->db->set("estado",'0');
                 $this->db->update("usuarios");
         }
 
-/* END - CONTROLLER: Users */
+/* END - CONTROLLER: Usuarios */
 
-/* START - CONTROLLER: Companies */
+/* START - CONTROLLER: Productos */
 
         function ListaProductos(){
 
@@ -85,36 +80,36 @@ class Query_Model extends CI_Model{
                 return $query->result();
         }
 
-        function InsertCompanyDB($CompanyData){
+        function InsertaProducto($DatosProducto){
 
-                $this->db->insert("companies",$CompanyData);      
+                $this->db->insert("productos",$DatosProducto);      
         }
 
-        function SelectByCompanyIDDB($CompanyID){
+        function SeleccionaProductoPorID($IDProducto){
 
                 $this->db->select('*');
-                $this->db->from('companies');
-                $this->db->where('id_company',$CompanyID);
+                $this->db->from('productos');
+                $this->db->where('id_producto',$IDProducto);
                 $query = $this->db->get();
                 return $query->result();
         }
 
-        public function UpdateCompanyDB($CompanyData,$Id){
+        public function ActualizaProducto($DatosProducto,$IDProducto){
 
-                $this->db->where('id_company',$Id);
-                $this->db->update("companies",$CompanyData);
+                $this->db->where('id_producto',$IDProducto);
+                $this->db->update("productos",$DatosProducto);
         }
 
-        public function DeleteCompanyPHP($CompanyID){
+        public function BorraProductoBD($IDProducto){
 
-                $this->db->where('id_company',$CompanyID);
-                $this->db->set("status",'0');
-                $this->db->update("companies");
+                $this->db->where('id_producto',$IDProducto);
+                $this->db->set("estado",'0');
+                $this->db->update("productos");
         }
 
-/* END - CONTROLLER: Companies :) */
+/* END - CONTROLLER: Productos */
 
-/* START - CONTROLLER: Reports :)*/
+/* START - CONTROLLER: Reportes */
         
         public function SelectReport1FromDate($FromDate,$ToDate){
 
@@ -124,6 +119,20 @@ class Query_Model extends CI_Model{
         }
 
 
-/* END - CONTROLLER: Reports :)*/
+/* END - CONTROLLER: Reportes */
+
+/* START - CONTROLLER: ErrorLog/ChangeLog */
+
+        function InsertaCambio($DatosCambio){
+
+                $this->db->insert("historial",$DatosCambio);
+        }
+
+        function InsertaError($DatosError){
+
+                $this->db->insert("errores",$DatosError);
+        }
+
+/* END - CONTROLLER: ErrorLog/ChangeLog */
 
 }

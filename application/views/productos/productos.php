@@ -56,6 +56,95 @@
           }
         }
 
+        function CambiaDepartamento(){
+
+          var DepartamentoProducto = $("#DepartamentoProducto").val();
+          $("#CategoriaProducto").empty();
+          $("#CategoriaProducto").append("<option value''>Elije Categoria</option>");
+
+          switch (DepartamentoProducto) {
+            
+            case "Marcha":
+
+              $("#CategoriaProducto").append("<option value'Marcha'>Marcha</option>");
+              $("#CategoriaProducto").append("<option value'Porta Carbon'>Porta Carbon</option>");
+              $("#CategoriaProducto").append("<option value'Satelite'>Satelite</option>");
+              $("#CategoriaProducto").append("<option value'Campos'>Campos</option>");
+              $("#CategoriaProducto").append("<option value'Armadura'>Armadura</option>");
+              $("#CategoriaProducto").append("<option value'Bujes'>Bujes</option>");
+              $("#CategoriaProducto").append("<option value'Bendix'>Bendix</option>");
+              $("#CategoriaProducto").append("<option value'Carbones'>Carbones</option>");
+              $("#CategoriaProducto").append("<option value'Campana'>Campana</option>");
+ 
+            break;
+
+            case "Arnes":
+
+              $("#CategoriaProducto").append("<option value'Arnes'>Arnes</option>");
+              
+            break;
+
+            case "Alternador":
+
+              $("#CategoriaProducto").append("<option value'Alternador'>Alternador</option>");
+              $("#CategoriaProducto").append("<option value'Balero'>Balero</option>");
+              $("#CategoriaProducto").append("<option value'Polea'>Polea</option>");
+              $("#CategoriaProducto").append("<option value'Porta Diodo'>Porta Diodo</option>");
+              $("#CategoriaProducto").append("<option value'Regulador'>Regulador</option>");
+              $("#CategoriaProducto").append("<option value'Rotor'>Rotor</option>");
+              $("#CategoriaProducto").append("<option value'Estator'>Estator</option>");
+              $("#CategoriaProducto").append("<option value'Tapas'>Carbones</option>");
+              
+            break;
+
+            case "Iluminacion":
+
+              $("#CategoriaProducto").append("<option value'Iluminacion'>Iluminacion</option>");
+              $("#CategoriaProducto").append("<option value'Focos'>Focos</option>");
+              $("#CategoriaProducto").append("<option value'Plafones'>Plafones</option>");
+              
+            break;
+
+            case "Accesorios":
+
+              $("#CategoriaProducto").append("<option value'Accesorios'>Accesorios</option>");
+              $("#CategoriaProducto").append("<option value'Focos'>Focos</option>");
+              $("#CategoriaProducto").append("<option value'Faros Auxiliares'>Faros Auxiliares</option>");
+              $("#CategoriaProducto").append("<option value'Plafones'>Plafones</option>");
+              
+            break;
+              
+            case "Quimicos":
+
+              $("#CategoriaProducto").append("<option value'Quimicos'>Quimicos</option>");
+              $("#CategoriaProducto").append("<option value'Aceites'>Aceites</option>");
+              $("#CategoriaProducto").append("<option value'Baterias'>Baterias</option>");
+              $("#CategoriaProducto").append("<option value'Limpieza'>Limpieza</option>");
+              
+            break;
+            
+            case "Encendido":
+
+              $("#CategoriaProducto").append("<option value'Llavines'>Llavines</option>");
+              $("#CategoriaProducto").append("<option value'Pastilla encendido'>Pastilla encendido</option>");
+              
+            break;
+
+            case "Fuel Injection":
+
+              $("#CategoriaProducto").append("<option value'Fuel Injection'>Fuel Injection</option>");
+              $("#CategoriaProducto").append("<option value'Modulos encendido'>Modulos encendido</option>");
+              $("#CategoriaProducto").append("<option value'CKP'>CKP</option>");
+              $("#CategoriaProducto").append("<option value'CMP'>CMP</option>");
+              $("#CategoriaProducto").append("<option value'Bomba gasolina'>Bomba gasolina</option>");
+              $("#CategoriaProducto").append("<option value'Bobina'>Bobina</option>");
+              
+            break;
+          
+
+          }
+        }
+
     </script>
 
 
@@ -113,6 +202,8 @@
                                                 <br>
                                                 <input type="text" id="IDOculto" hidden>
                                                 <input type="text" id="NombreImagen" hidden>
+                                                <input type="text" id="FechaRegistro" hidden>
+                                                <input type="text" id="UsuarioRegistro" hidden>
                                                 <input type="text" name="NombreProducto" placeholder="Nombre" id="NombreProducto" class="form-control">
                                             </div>
 
@@ -133,37 +224,31 @@
                                                 <br>
                                                 <input type="text" name="PrecioProducto" placeholder="Precio" id="PrecioProducto" class="form-control" onKeyPress="if (event.keyCode < 48 || event.keyCode > 57)event.returnValue = false;">
                                             </div>
+                                            
+                                            <div class="form-group">     
+                                              <label for="DepartamentoProducto">Departamento</label>                                           
+                                              <select id="DepartamentoProducto" name="DepartamentoProducto" class="form-control" style="width: 300px" onchange="CambiaDepartamento()">
+                                                <option value="" >Elije Departamento</option>
+
+                                                <option value="Marcha">Marcha</option>
+                                                <option value="Arnes">Arnes</option>
+                                                <option value="Alternador">Alternador</option>
+                                                <option value="Accesorios">Accesorios</option>
+                                                <option value="Quimicos">Quimicos</option>
+                                                <option value="Encendido">Encendido</option>
+                                                <option value="Fuel Injection">Fuel Injection</option>
+                                                                                
+                                              </select>
+                                            </div> 
 
                                             <div class="form-group">       
                                               <label for="CategoriaProducto">Categoria</label>                                           
                                               <select id="CategoriaProducto" name="CategoriaProducto" class="form-control" style="width: 300px">
                                                 <option value="" >Elije Categoria</option>
-
-                                         
                                                                                 
                                               </select>
                                             </div> 
-
-                                            <div class="form-group">    
-                                              <label for="SubcategoriaProducto">Subcategoria</label>                                              
-                                              <select id="SubcategoriaProducto" name="SubcategoriaProducto" class="form-control" style="width: 300px">
-                                                <option value="" >Elije Subcategoria</option>
-
-                                         
-                                                                                
-                                              </select>
-                                            </div> 
-
-                                            <div class="form-group">     
-                                              <label for="DepartamentoProducto">Departamento</label>                                           
-                                              <select id="DepartamentoProducto" name="DepartamentoProducto" class="form-control" style="width: 300px">
-                                                <option value="" >Elije Departamento</option>
-
-                                         
-                                                                                
-                                              </select>
-                                            </div> 
-
+                               
                                             <div class="form-group">
                                                  <label for="CapturaImagen">Imagen</label>
                                                 <input type="file" class="form-control" data-size="sm" accept=".jpg" id="CapturaImagen" onchange="EncodeBase64();">
@@ -172,7 +257,7 @@
                                             <img src="" height="250" width="250" id="ImagenProducto">
 
                                              <div class="form-group" id="EstadoEscondido">
-                                                  <label for="EstadoProducto">Status</label>
+                                                  <label for="EstadoProducto">Estado</label>
                                                   <select id="EstadoProducto" name="EstadoProducto" class="form-control">
                                                   <option value="" >Elije Estado</option>
                                                     
@@ -190,9 +275,9 @@
                                                 </div>
                                             </div>
 
-                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="VerificaContenidoProducto()" id="BotonGuardaProducto">Save</button> 
+                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="VerificaContenidoProducto()" id="BotonGuardaProducto">Guardar</button> 
 
-                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="EditaProductoS()" id="BotonEditaProducto">Edit</button> 
+                                            <button class="btn btn-primary btn-block text-uppercase waves-effect waves-light" onclick="EditaProductoS()" id="BotonEditaProducto">Editar</button> 
                                             
                                             <!-- form ends -->         
                                         </div>

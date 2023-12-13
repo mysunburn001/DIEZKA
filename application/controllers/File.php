@@ -8,7 +8,7 @@ class File extends MY_Controller {
         $this->load->helper('file');
         
         $filename = $file_path;
-        $file_system_path = "C:".DIRECTORY_SEPARATOR."xampp".DIRECTORY_SEPARATOR."htdocs".DIRECTORY_SEPARATOR."BaseISW21".DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."myapp".DIRECTORY_SEPARATOR."img".DIRECTORY_SEPARATOR.$filename;
+        $file_system_path = "C:".DIRECTORY_SEPARATOR."xampp".DIRECTORY_SEPARATOR."htdocs".DIRECTORY_SEPARATOR."DIEZKA".DIRECTORY_SEPARATOR."application".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR.$filename;
       
         $file_content = read_file($file_system_path);
         

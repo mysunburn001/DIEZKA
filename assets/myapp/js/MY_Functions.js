@@ -335,9 +335,9 @@ function RevisaUsuarioExistenteS(){
             async:true,
             success:function(datos){
 
-                var object = JSON.parse(datos);
+                var Objeto = JSON.parse(datos);
 
-                if(object!=""){
+                if(Objeto!=""){
 
                     swal("Error","El nombre de usuario ya esta en uso, porfavor intente con uno nuevo","error");
                     $("#NUsuario").val("");
@@ -397,6 +397,11 @@ function GuardaUsuarioS(){
         async:true,
         timeout: 15000,
         success:function(datos){
+
+            var Cambio = "Guardar";
+            var Origen = "Usuarios";
+            var Contenido = NUsuario;
+            GuardaCambioUsuario(Cambio,Origen,Contenido);
 
             $('#PreloaderUsuario').hide();
             $("#BotonGuardaUsuario").attr('disabled',false);
@@ -482,19 +487,18 @@ function ConsultaDatosUsuarioS(IDUsuario){
                 $('#PreloaderUsuario').hide();
                 $("#BotonGuardaUsuario").attr('disabled',false);
 
-                var Object = JSON.parse(datos);
-                //alert(Object);
+                var Objeto = JSON.parse(datos);
 
-                var UsuarioID = Object[0].id_usuario;
-                var NombreUsuario = Object[0].nombre;
-                var ApPaternoUsuario = Object[0].amaterno;
-                var ApMaternoUsuario = Object[0].apaterno;
-                var TelefonoUsuario = Object[0].telefono;
-                var CorreoUsuario = Object[0].email;
-                var NUsuario = Object[0].username;
-                var PasswordUsuario = Object[0].password;
-                var RolUsuario = Object[0].rol;
-                var EstadoUsuario = Object[0].estado;
+                var UsuarioID = Objeto[0].id_usuario;
+                var NombreUsuario = Objeto[0].nombre;
+                var ApPaternoUsuario = Objeto[0].amaterno;
+                var ApMaternoUsuario = Objeto[0].apaterno;
+                var TelefonoUsuario = Objeto[0].telefono;
+                var CorreoUsuario = Objeto[0].email;
+                var NUsuario = Objeto[0].username;
+                var PasswordUsuario = Objeto[0].password;
+                var RolUsuario = Objeto[0].rol;
+                var EstadoUsuario = Objeto[0].estado;
 
                 $("#IDOculto").val(UsuarioID);
                 $("#NombreUsuario").val(NombreUsuario);
@@ -549,6 +553,11 @@ function EditaUsuarioS(){
             timeout: 15000,
             success:function(datos){
 
+                var Cambio = "Editar";
+                var Origen = "Usuarios";
+                var Contenido = NUsuario;
+                GuardaCambioUsuario(Cambio,Origen,Contenido);
+
                 $('#PreloaderUsuario').hide();
                 $("#BotonEditaUsuario").attr('disabled',false);
 
@@ -587,7 +596,7 @@ function EditaUsuarioS(){
                         closeOnConfirm: true,   
                         closeOnCancel: false 
                     }, function(isConfirm){ 
-                        ('#PreloaderUsuario').hide();
+                        $('#PreloaderUsuario').hide();
                         $('#BotonEditaUsuario').removeAttr('disabled');       
                     });
 
@@ -625,6 +634,7 @@ function BorraUsuarioS(IDUsuario){
 
     $('#PreloaderUsuario').show();
 
+    var Delay = 500;
     var IDUsuario = IDUsuario;
 
     if(IDUsuario!=""){
@@ -653,58 +663,75 @@ function BorraUsuarioS(IDUsuario){
 
                         $('#PreloaderUsuario').hide();
 
-                        swal({   
-                            title: "Exito",
-                            text: "El usuario ha sido borrado exitosamente",   
-                            type: "success",   
-                            showCancelButton: false,   
-                            confirmButtonColor: "#DD6B55",   
-                            confirmButtonText: "OK",   
-                            cancelButtonText: "Cancel",   
-                            closeOnConfirm: false,   
-                            closeOnCancel: false 
-                        }, function(isConfirm){ 
-                                location.href = "";       
-                        });
-                        
+                        var Objeto = JSON.parse(datos);
+                        var NUsuario = Objeto;
+
+                        var Cambio = "Borrar";
+                        var Origen = "Usuarios";
+                        var Contenido = NUsuario;
+                        GuardaCambioUsuario(Cambio,Origen,Contenido);
+
+                        setTimeout(function() {
+
+                            swal({   
+                                title: "Exito",
+                                text: "El usuario ha sido borrado exitosamente",   
+                                type: "success",   
+                                showCancelButton: false,   
+                                confirmButtonColor: "#DD6B55",   
+                                confirmButtonText: "OK",   
+                                cancelButtonText: "Cancel",   
+                                closeOnConfirm: false,   
+                                closeOnCancel: false 
+                            }, function(isConfirm){ 
+                                    location.href = "";       
+                            });
+
+                        }, Delay);
+
                     },error:function(status){
 
                         var CodigoError = status.status;
                         var DescripcionError = status.statusText;
                         var Origen = "BorraUsuario"
                         GuardaErrorUsuario(CodigoError,DescripcionError,Origen);
-                    
-                        if (status.statusText=="timeout") {
 
-                            swal({   
-                                title: "Error",
-                                text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
-                                type: "error",   
-                                showCancelButton: false,   
-                                confirmButtonColor: "#DD6B55",   
-                                confirmButtonText: "OK",   
-                                cancelButtonText: "Cancelar",   
-                                closeOnConfirm: true,   
-                                closeOnCancel: false 
-                            }, function(isConfirm){ 
-                                $('#PreloaderUsuario').hide();      
-                            }); 
-         
-                        }else if(status.statusText=="Not Found"){
-                
-                            $('#PreloaderUsuario').hide();
-                            swal('Error',"La pagina que busca no existe" ,'error' );
-                
-                        }else if(status.statusText=="Internal Server Error"){
-                
-                            $('#PreloaderUsuario').hide();
-                            swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
-                
-                        }else{
-                
-                            $('#PreloaderUsuario').hide();
-                            swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
-                        }
+                        setTimeout(function() {
+
+                            if (status.statusText=="timeout") {
+
+                                swal({   
+                                    title: "Error",
+                                    text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
+                                    type: "error",   
+                                    showCancelButton: false,   
+                                    confirmButtonColor: "#DD6B55",   
+                                    confirmButtonText: "OK",   
+                                    cancelButtonText: "Cancelar",   
+                                    closeOnConfirm: true,   
+                                    closeOnCancel: false 
+                                }, function(isConfirm){ 
+                                    $('#PreloaderUsuario').hide();      
+                                }); 
+            
+                            }else if(status.statusText=="Not Found"){
+                    
+                                $('#PreloaderUsuario').hide();
+                                swal('Error',"La pagina que busca no existe" ,'error' );
+                    
+                            }else if(status.statusText=="Internal Server Error"){
+                    
+                                $('#PreloaderUsuario').hide();
+                                swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
+                    
+                            }else{
+                    
+                                $('#PreloaderUsuario').hide();
+                                swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
+                            }
+
+                        }, Delay);
+                        
                     }
 
                 });
@@ -716,7 +743,7 @@ function BorraUsuarioS(IDUsuario){
 
 }
 
-/* END - CONTROLLER: Users */
+/* END - CONTROLLER: Usuarios */
 
 /* =============================================================================================================================================================================================================================== */
 
@@ -735,9 +762,9 @@ function RevisaClaveExistenteS(){
             async:true,
             success:function(datos){
 
-                var object = JSON.parse(datos);
+                var Objeto = JSON.parse(datos);
 
-                if(object!=""){
+                if(Objeto!=""){
 
                     swal("Error","La clave del producto ya esta en uso, porfavor intente con una nueva","error");
                     $("#ClaveProducto").val("");
@@ -754,46 +781,62 @@ function RevisaClaveExistenteS(){
 
 }
 
-function VerifyCompanyContent(){
+function VerificaContenidoProducto(){
 
-    $("#PreloaderCompany").show();
-    $("#ButtonSaveCompany").attr('disabled',true);
+    $("#PreloaderProducto").show();
+    $("#BotonGuardaProducto").attr('disabled',true);
 
-    var CompanyName = $("#CompanyName").val();
-    var Category = $("#Category").val();
-    var CompanyRegDate = $("#CompanyRegDate").val();
+    var NombreProducto = $("#NombreProducto").val();
+    var DescripcionProducto = $("#DescripcionProducto").val();
+    var ClaveProducto = $("#ClaveProducto").val();
+    var PrecioProducto = $("#PrecioProducto").val();
+    var DepartamentoProducto = $("#DepartamentoProducto").val();
+    var CategoriaProducto = $("#CategoriaProducto").val();
+    var ImagenProducto = $("#CapturaImagen").val();
 
-    if(CompanyName!="" && Category!="" && CompanyRegDate!="" ){
+    if(NombreProducto!="" && DescripcionProducto!="" && ClaveProducto!="" && PrecioProducto!="" && DepartamentoProducto!=""  && CategoriaProducto!="" && ImagenProducto!=""){
 
-       SaveCompany(); 
+       GuardaProductoS(); 
 
     }else{
 
-        $('#PreloaderCompany').hide();
-        $("#ButtonSaveCompany").attr('disabled',false);
-        swal("Warning","Form incomplete","warning");
+        $('#PreloaderProducto').hide();
+        $("#BotonGuardaProducto").attr('disabled',false);
+        swal("Cuidado","Aun quedan campos vacios","warning");
     }
 }
 
-function SaveCompany(){
+function GuardaProductoS(){
 
-    var CompanyName = $("#CompanyName").val();
-    var Category = $("#Category").val();
-    var CompanyRegDate = $("#CompanyRegDate").val();
+    var NombreProducto = $("#NombreProducto").val();
+    var DescripcionProducto = $("#DescripcionProducto").val();
+    var ClaveProducto = $("#ClaveProducto").val();
+    var PrecioProducto = $("#PrecioProducto").val();
+    var DepartamentoProducto = $("#DepartamentoProducto").val();
+    var CategoriaProducto = $("#CategoriaProducto").val();
+
+    var FuentImagenProducto = $("#ImagenProducto").attr('src');
+    var ImagenProducto = FuentImagenProducto.replace(/^data:image\/[a-z]+;base64,/, "");
 
     $.ajax({
-        url:myBase_url+"index.php/Company/SaveCompanyPHP",
+        url:myBase_url+"index.php/Productos/GuardaProductoC",
         type:"POST",
-        data:{CompanyName:CompanyName,Category:Category,CompanyRegDate:CompanyRegDate},
+        data:{NombreProducto:NombreProducto,DescripcionProducto:DescripcionProducto,ClaveProducto:ClaveProducto,PrecioProducto:PrecioProducto,DepartamentoProducto:DepartamentoProducto,CategoriaProducto:CategoriaProducto,ImagenProducto:ImagenProducto},
         async:true,
+        timeout: 15000,
         success:function(datos){
 
-            $('#PreloaderCompany').hide();
-            $("#ButtonSaveCompany").attr('disabled',false);
+            var Cambio = "Guardar";
+            var Origen = "Productos";
+            var Contenido = ClaveProducto;
+            GuardaCambioProducto(Cambio,Origen,Contenido);
+
+            $('#PreloaderProducto').hide();
+            $("#BotonGuardaProducto").attr('disabled',false);
 
             swal({   
-                title: "Success",
-                text: "User has been saved",   
+                title: "Exito",
+                text: "El producto ha sido guardado exitosamente",   
                 type: "success",   
                 showCancelButton: false,   
                 confirmButtonColor: "#DD6B55",   
@@ -806,133 +849,331 @@ function SaveCompany(){
             }); 
 
             
-        },error:function(){
+        },error:function(status){
 
-            $('#PreloaderCompany').hide();
-            $("#ButtonSaveCompany").attr('disabled',false);
-            swal("Error","An internal server error has ocurred","error");
+            var CodigoError = status.status;
+            var DescripcionError = status.statusText;
+            var Origen = "GuardaProducto"
+            GuardaErrorProducto(CodigoError,DescripcionError,Origen);
+        
+            if (status.statusText=="timeout") {
+
+                swal({   
+                    title: "Error",
+                    text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
+                    type: "error",   
+                    showCancelButton: false,   
+                    confirmButtonColor: "#DD6B55",   
+                    confirmButtonText: "OK",   
+                    cancelButtonText: "Cancelar",   
+                    closeOnConfirm: true,   
+                    closeOnCancel: false 
+                }, function(isConfirm){ 
+                    $('#PreloaderProducto').hide();  
+                    $("#BotonGuardaProducto").attr('disabled',false);    
+                }); 
+
+            }else if(status.statusText=="Not Found"){
+    
+                $('#PreloaderProducto').hide();
+                $("#BotonGuardaProducto").attr('disabled',false);
+                swal('Error',"La pagina que busca no existe" ,'error' );
+    
+            }else if(status.statusText=="Internal Server Error"){
+    
+                $('#PreloaderProducto').hide();
+                $("#BotonGuardaProducto").attr('disabled',false);
+                swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
+    
+            }else{
+    
+                $('#PreloaderProducto').hide();
+                $("#BotonGuardaProducto").attr('disabled',false);
+                swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
+            }
         }
 
     });
 
 }
 
-function GetCompanyData(CompanyID){
+function ConsultaDatosProductoS(IDProducto){
 
-    $("#PreloaderCompany").show();
-    $("#ButtonSaveCompany").attr('disabled',true);
+    $("#PreloaderProducto").show();
+    $("#BotonGuardaProducto").attr('disabled',true);
 
-    var CompanyID = CompanyID;
+    var IDProducto = IDProducto;
 
-    if(CompanyID!=""){
+    if(IDProducto!=""){
 
         $.ajax({
-            url:myBase_url+"index.php/Company/GetCompanyDataPHP",
+            url:myBase_url+"index.php/Productos/ConsultaDatosProductoC",
             type:"POST",
-            data:{CompanyID:CompanyID},
+            data:{IDProducto:IDProducto},
             async:true,
             success:function(datos){
 
-                $('#PreloaderCompany').hide();
-                $("#ButtonSaveCompany").attr('disabled',false);
+                $('#PreloaderProducto').hide();
+                $("#BotonGuardaProducto").attr('disabled',false);
 
-                var Object = JSON.parse(datos);
+                var Objeto = JSON.parse(datos);
 
-                var CompanyID = Object[0].id_company;
-                var CompanyName = Object[0].name;
-                var Category = Object[0].category;
-                var RegDate = Object[0].registration_date;
-                var Status = Object[0].status;
+                var ProductoID = Objeto[0].id_producto;
+                var NombreProducto = Objeto[0].nombre;
+                var DescripcionProducto = Objeto[0].descripcion;
+                var ClaveProducto = Objeto[0].clave;
+                var PrecioProducto = Objeto[0].precio;
+                var ImagenProducto = Objeto[0].imagen;
+                var DepartamentoProducto = Objeto[0].departamento;
+                var CategoriaProducto = Objeto[0].categoria;
+                var FechaRegistro = Objeto[0].fecha_registro;
+                var UsuarioRegistro = Objeto[0].usuario_registro;
+                var EstadoProducto = Objeto[0].estado;
 
-                $("#HiddenID").val(CompanyID);
-                $("#CompanyName").val(CompanyName);
-                $("#Category").val(Category);
-                $("#CompanyRegDate").val(RegDate);
-                $("#CompanyStatus").val(Status);
+                $("#IDOculto").val(ProductoID);
+                $("#NombreProducto").val(NombreProducto);
+                $("#DescripcionProducto").val(DescripcionProducto);
+                $("#ClaveProducto").val(ClaveProducto);
+                $("#PrecioProducto").val(PrecioProducto);
+                $("#DepartamentoProducto").val(DepartamentoProducto);
+                CambiaDepartamento();
+                $("#CategoriaProducto").val(CategoriaProducto);
+                $("#NombreImagen").val(ImagenProducto);
+                $("#FechaRegistro").val(FechaRegistro);
+                $("#UsuarioRegistro").val(UsuarioRegistro);
+                $("#EstadoProducto").val(EstadoProducto);
 
-                $("#CompanyRegDate").attr('disabled',true);
+                $("#ClaveProducto").attr('disabled',true);
 
-                $("#HiddenStatus").show();
-                $("#ButtonSaveCompany").hide();
-                $("#ButtonEditCompany").show();
+                $("#EstadoEscondido").show();
+                $("#BotonGuardaProducto").hide();
+                $("#BotonEditaProducto").show();
 
             },error:function(){
 
-                $('#PreloaderCompany').hide();
-                $("#ButtonSaveCompany").attr('disabled',false);
-                swal("Error","An internal server error has ocurred","error");
+                $('#PreloaderProducto').hide();
+                $("#BotonGuardaProducto").attr('disabled',false);
+                swal("Error","Ha ocurrido un error interno del servidor, porfavor intentelo de nuevo","error");
             }
 
         });
     }
 }
 
-function EditCompany(){
+function EditaProductoS(){
 
-    $('#PreloaderCompany').show();
-    $("#ButtonEditCompany").attr('disabled',true);
+    $('#PreloaderProducto').show();
+    $("#BotonEditaProducto").attr('disabled',true);
 
-    var Id = $("#HiddenID").val();
-    var CompanyName = $("#CompanyName").val();
-    var Category = $("#Category").val();
-    var CompanyRegDate = $("#CompanyRegDate").val();
-    var Status = $("#CompanyStatus").val();
+    var IDProducto = $("#IDOculto").val();
+    var NombreProducto = $("#NombreProducto").val();
+    var DescripcionProducto = $("#DescripcionProducto").val();
+    var ClaveProducto = $("#ClaveProducto").val();
+    var PrecioProducto = $("#PrecioProducto").val();
+    var NombreImagen = $("#NombreImagen").val();
+    var DepartamentoProducto = $("#DepartamentoProducto").val();
+    var CategoriaProducto = $("#CategoriaProducto").val();
+    var FechaRegistro = $("#FechaRegistro").val();
+    var UsuarioRegistro = $("#UsuarioRegistro").val();
+    var EstadoProducto = $("#EstadoProducto").val();
 
-    if(Id != "" && CompanyName!="" && Category!="" && CompanyRegDate!="" && Status != ""){
+    var CapturaImagen = $("#CapturaImagen").val();
 
-        $.ajax({
-            url:myBase_url+"index.php/Company/UpdateCompanyPHP",
-            type:"POST",
-            data:{Id:Id,CompanyName:CompanyName,Category:Category,CompanyRegDate:CompanyRegDate,Status:Status},
-            async:true,
-            success:function(datos){
+    if (CapturaImagen!="") {
 
-                $('#PreloaderCompany').hide();
-                $("#ButtonEditCompany").attr('disabled',false);
+        var Accion = "1";
+        var FuentImagenProducto = $("#ImagenProducto").attr('src');
+        var ImagenProducto = FuentImagenProducto.replace(/^data:image\/[a-z]+;base64,/, "");
 
-                swal({   
-                    title: "Success",
-                    text: "User has been updated",   
-                    type: "success",   
-                    showCancelButton: false,   
-                    confirmButtonColor: "#DD6B55",   
-                    confirmButtonText: "OK",   
-                    cancelButtonText: "Cancelar",   
-                    closeOnConfirm: false,   
-                    closeOnCancel: false 
-                }, function(isConfirm){ 
-                        location.href = "";       
-                }); 
+        if(IDProducto != "" && NombreProducto!="" && DescripcionProducto!="" && ClaveProducto!="" && PrecioProducto != "" && NombreImagen != "" && DepartamentoProducto != "" && CategoriaProducto != "" && FechaRegistro != "" && UsuarioRegistro != "" && EstadoProducto != ""){
 
+            $.ajax({
+                url:myBase_url+"index.php/Productos/EditaProductoC",
+                type:"POST",
+                data:{Accion:Accion,IDProducto:IDProducto,NombreProducto:NombreProducto,DescripcionProducto:DescripcionProducto,ClaveProducto:ClaveProducto,PrecioProducto:PrecioProducto,NombreImagen:NombreImagen,ImagenProducto:ImagenProducto,DepartamentoProducto:DepartamentoProducto,CategoriaProducto:CategoriaProducto,FechaRegistro:FechaRegistro,UsuarioRegistro:UsuarioRegistro,EstadoProducto:EstadoProducto},
+                async:true,
+                success:function(datos){
+    
+                    var Cambio = "Editar";
+                    var Origen = "Productos";
+                    var Contenido = ClaveProducto;
+                    GuardaCambioProducto(Cambio,Origen,Contenido);
+    
+                    $('#PreloaderProducto').hide();
+                    $("#BotonEditaProducto").attr('disabled',false);
+    
+                    swal({   
+                        title: "Exito",
+                        text: "El producto ha sido actualizado exitosamente",   
+                        type: "success",   
+                        showCancelButton: false,   
+                        confirmButtonColor: "#DD6B55",   
+                        confirmButtonText: "OK",   
+                        cancelButtonText: "Cancelar",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false 
+                    }, function(isConfirm){ 
+                            location.href = "";       
+                    }); 
+    
+                    
+                },error:function(status){
+    
+                    var CodigoError = status.status;
+                    var DescripcionError = status.statusText;
+                    var Origen = "EditaProducto"
+                    GuardaErrorProducto(CodigoError,DescripcionError,Origen);
                 
-            },error:function(){
-
-                $('#PreloaderCompany').hide();
-                $("#ButtonEditCompany").attr('disabled',false);
-                swal("Error","An internal server error has ocurred","error");
-            }
-
-        });
-
+                    if (status.statusText=="timeout") {
+    
+                        swal({   
+                            title: "Error",
+                            text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
+                            type: "error",   
+                            showCancelButton: false,   
+                            confirmButtonColor: "#DD6B55",   
+                            confirmButtonText: "OK",   
+                            cancelButtonText: "Cancelar",   
+                            closeOnConfirm: true,   
+                            closeOnCancel: false 
+                        }, function(isConfirm){ 
+                            $('#PreloaderUsuario').hide();
+                            $('#BotonEditaUsuario').removeAttr('disabled');       
+                        });
+    
+                    }else if(status.statusText=="Not Found"){
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error',"La pagina que busca no existe" ,'error' );
+            
+                    }else if(status.statusText=="Internal Server Error"){
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
+            
+                    }else{
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
+                    }
+                }
+    
+            });
+    
+        }else{
+    
+            $('#PreloaderProducto').hide();
+            $("#BotonEditaProducto").attr('disabled',false);
+            swal("Cuidado","Aun hay campos vacios","warning");
+        }
+        
     }else{
 
-        $('#PreloaderCompany').hide();
-        $("#ButtonEditCompany").attr('disabled',false);
-        swal("Warning","Form incomplete","warning");
+        var Accion = "2";
+        
+        if(IDProducto != "" && NombreProducto!="" && DescripcionProducto!="" && ClaveProducto!="" && PrecioProducto != "" && NombreImagen != "" && DepartamentoProducto != "" && CategoriaProducto != "" && FechaRegistro != "" && UsuarioRegistro != "" && EstadoProducto != ""){
+
+            $.ajax({
+                url:myBase_url+"index.php/Productos/EditaProductoC",
+                type:"POST",
+                data:{Accion:Accion,IDProducto:IDProducto,NombreProducto:NombreProducto,DescripcionProducto:DescripcionProducto,ClaveProducto:ClaveProducto,PrecioProducto:PrecioProducto,NombreImagen:NombreImagen,DepartamentoProducto:DepartamentoProducto,CategoriaProducto:CategoriaProducto,FechaRegistro:FechaRegistro,UsuarioRegistro:UsuarioRegistro,EstadoProducto:EstadoProducto},
+                async:true,
+                success:function(datos){
+    
+                    var Cambio = "Editar";
+                    var Origen = "Productos";
+                    var Contenido = ClaveProducto;
+                    GuardaCambioProducto(Cambio,Origen,Contenido);
+    
+                    $('#PreloaderProducto').hide();
+                    $("#BotonEditaProducto").attr('disabled',false);
+    
+                    swal({   
+                        title: "Exito",
+                        text: "El producto ha sido actualizado exitosamente",   
+                        type: "success",   
+                        showCancelButton: false,   
+                        confirmButtonColor: "#DD6B55",   
+                        confirmButtonText: "OK",   
+                        cancelButtonText: "Cancelar",   
+                        closeOnConfirm: false,   
+                        closeOnCancel: false 
+                    }, function(isConfirm){ 
+                            location.href = "";       
+                    }); 
+    
+                    
+                },error:function(status){
+    
+                    var CodigoError = status.status;
+                    var DescripcionError = status.statusText;
+                    var Origen = "EditaProducto"
+                    GuardaErrorProducto(CodigoError,DescripcionError,Origen);
+                
+                    if (status.statusText=="timeout") {
+    
+                        swal({   
+                            title: "Error",
+                            text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
+                            type: "error",   
+                            showCancelButton: false,   
+                            confirmButtonColor: "#DD6B55",   
+                            confirmButtonText: "OK",   
+                            cancelButtonText: "Cancelar",   
+                            closeOnConfirm: true,   
+                            closeOnCancel: false 
+                        }, function(isConfirm){ 
+                            $('#PreloaderUsuario').hide();
+                            $('#BotonEditaUsuario').removeAttr('disabled');       
+                        });
+    
+                    }else if(status.statusText=="Not Found"){
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error',"La pagina que busca no existe" ,'error' );
+            
+                    }else if(status.statusText=="Internal Server Error"){
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
+            
+                    }else{
+            
+                        $('#PreloaderUsuario').hide();
+                        $('#BotonEditaUsuario').removeAttr('disabled');
+                        swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
+                    }
+                }
+    
+            });
+    
+        }else{
+    
+            $('#PreloaderProducto').hide();
+            $("#BotonEditaProducto").attr('disabled',false);
+            swal("Cuidado","Aun hay campos vacios","warning");
+        }
     }
+    
 }
 
-function DeleteCompany(CompanyID){
+function BorraProductoS(IDProducto){
 
-    $('#PreloaderCompany').show();
+    $('#PreloaderProducto').show();
 
-    var CompanyID = CompanyID;
+    var Delay = 500;
+    var IDProducto = IDProducto;
 
-    if(CompanyID!=""){
+    if(IDProducto!=""){
 
         swal({   
-            title: "Warning",
-            text: "Are you sure of deleting this company??",   
+            title: "Cuidado",
+            text: "Estas seguro de borrar este producto?",   
             type: "warning",   
             showCancelButton: true,   
             confirmButtonColor: "#DD6B55",   
@@ -945,32 +1186,82 @@ function DeleteCompany(CompanyID){
             if (isConfirm==true) {
 
                 $.ajax({
-                    url:myBase_url+"index.php/Company/DeleteCompanyPHP",
+                    url:myBase_url+"index.php/Productos/BorraProductoC",
                     type:"POST",
-                    data:{CompanyID:CompanyID},
+                    data:{IDProducto:IDProducto},
                     async:true,
                     success:function(datos){
 
-                        $('#PreloaderUser').hide();
+                        $('#PreloaderProducto').hide();
 
-                        swal({   
-                            title: "Success",
-                            text: "User deleted successfully",   
-                            type: "success",   
-                            showCancelButton: false,   
-                            confirmButtonColor: "#DD6B55",   
-                            confirmButtonText: "OK",   
-                            cancelButtonText: "Cancel",   
-                            closeOnConfirm: false,   
-                            closeOnCancel: false 
-                        }, function(isConfirm){ 
-                                location.href = "";       
-                        });
+                        var Objeto = JSON.parse(datos);
+                        var ClaveProducto = Objeto;
+
+                        var Cambio = "Borrar";
+                        var Origen = "Productos";
+                        var Contenido = ClaveProducto;
+                        GuardaCambioUsuario(Cambio,Origen,Contenido);
+
+                        setTimeout(function() {
+
+                            swal({   
+                                title: "Exito",
+                                text: "El producto ha sido borrado exitosamente",   
+                                type: "success",   
+                                showCancelButton: false,   
+                                confirmButtonColor: "#DD6B55",   
+                                confirmButtonText: "OK",   
+                                cancelButtonText: "Cancel",   
+                                closeOnConfirm: false,   
+                                closeOnCancel: false 
+                            }, function(isConfirm){ 
+                                    location.href = "";       
+                            });
+
+                        }, Delay);
                         
-                    },error:function(){
+                    },error:function(status){
 
-                        $('#PreloaderCompany').hide();
-                        swal("Error","An internal server error has ocurred","error");
+                        var CodigoError = status.status;
+                        var DescripcionError = status.statusText;
+                        var Origen = "BorraProducto"
+                        GuardaErrorProducto(CodigoError,DescripcionError,Origen);
+
+                        setTimeout(function() {
+
+                            if (status.statusText=="timeout") {
+
+                                swal({   
+                                    title: "Error",
+                                    text: "Tu dispositivo no esta conectado a internet o la conexion es muy lenta.\n Porfavor intentelo de nuevo",   
+                                    type: "error",   
+                                    showCancelButton: false,   
+                                    confirmButtonColor: "#DD6B55",   
+                                    confirmButtonText: "OK",   
+                                    cancelButtonText: "Cancelar",   
+                                    closeOnConfirm: true,   
+                                    closeOnCancel: false 
+                                }, function(isConfirm){ 
+                                    $('#PreloaderProducto').hide();      
+                                }); 
+            
+                            }else if(status.statusText=="Not Found"){
+                    
+                                $('#PreloaderProducto').hide();
+                                swal('Error',"La pagina que busca no existe" ,'error' );
+                    
+                            }else if(status.statusText=="Internal Server Error"){
+                    
+                                $('#PreloaderProducto').hide();
+                                swal('Error','Ha ocurrido un error interno del servidor, porfavor contacte al administrador del sitio', 'error');
+                    
+                            }else{
+                    
+                                $('#PreloaderProducto').hide();
+                                swal('Error', 'Ha ocurrido un error desconocido, porfavor contacte al administrador del sitio','error');
+                            }
+
+                        }, Delay);
                     }
 
                 });
@@ -984,11 +1275,11 @@ function DeleteCompany(CompanyID){
 }
 
 
-/* END - CONTROLLER: Companies */
+/* END - CONTROLLER: Productos */
 
 /* =============================================================================================================================================================================================================================== */
 
-/* START - CONTROLLER: Reports */
+/* START - CONTROLLER: Reportes */
 
 
 function Report1(){
@@ -1152,10 +1443,10 @@ function Report1(){
     
 }
 
-/* END - CONTROLLER: Reports */
+/* END - CONTROLLER: Reportes */
 /* =============================================================================================================================================================================================================================== */
 
-/* START: ErrorHandling */
+/* START: ErrorLog/ChangeLog */
 
 function GuardaErrorSession(CodigoError,DescripcionError,Origen){
 
@@ -1163,6 +1454,22 @@ function GuardaErrorSession(CodigoError,DescripcionError,Origen){
         url:myBase_url+"index.php/Session/GuardaErrorSC",
         type:'POST',
         data:{CodigoError:CodigoError,DescripcionError:DescripcionError,Origen:Origen},
+        async: true,
+        success:function(datos){
+
+        },error:function(datos){
+
+        }
+
+    });
+}
+
+function GuardaCambioUsuario(Cambio,Origen,Contenido){
+
+    $.ajax({
+        url:myBase_url+"index.php/Usuarios/GuardaCambioUC",
+        type:'POST',
+        data:{Cambio:Cambio,Origen:Origen,Contenido:Contenido},
         async: true,
         success:function(datos){
 
@@ -1189,4 +1496,36 @@ function GuardaErrorUsuario(CodigoError,DescripcionError,Origen){
     });
 }
 
-/* END: ErrorHandling */
+function GuardaCambioProducto(Cambio,Origen,Contenido){
+
+    $.ajax({
+        url:myBase_url+"index.php/Productos/GuardaCambioPC",
+        type:'POST',
+        data:{Cambio:Cambio,Origen:Origen,Contenido:Contenido},
+        async: true,
+        success:function(datos){
+
+        },error:function(datos){
+
+        }
+
+    });
+}
+
+function GuardaErrorProducto(CodigoError,DescripcionError,Origen){
+
+    $.ajax({
+        url:myBase_url+"index.php/Productos/GuardaErrorPC",
+        type:'POST',
+        data:{CodigoError:CodigoError,DescripcionError:DescripcionError,Origen:Origen},
+        async: true,
+        success:function(datos){
+
+        },error:function(datos){
+
+        }
+
+    });
+}
+
+/* END: ErrorLog/ChangeLog */
