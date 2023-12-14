@@ -12,7 +12,7 @@ class Session extends CI_Controller {
     }
     
     public function index(){
-        $data['tabTitle'] = "Login - DIEZKA";
+        $data['tabTitle'] = "Inicio de sesion - DIEZKA";
         $this->load->view('templates/login',$data);
   
     }
