@@ -81,10 +81,10 @@ class Productos extends MY_Controller {
         $FileName = 'Imagen-'.$NombreProducto.'-'.$ClaveProducto.'.jpeg';
         file_put_contents($FileName, $FileData);
         $Destino = "C:/xampp/htdocs/DIEZKA/application/images/".$FileName;
-        //$Destino = "/home/ozul6s4w8s9l/public_html/DIEZKA/application/images/".$FileName;
+        //$Destino = "/home/ozul6s4w8s9l/public_html/Admin/application/images/".$FileName;
         copy($FileName, $Destino); 
         $DestinoUnlinkRaiz = "C:/xampp/htdocs/DIEZKA/".$FileName;
-        //$DestinoUnlinkRaiz = "/home/ozul6s4w8s9l/public_html/DIEZKA/".$FileName;
+        //$DestinoUnlinkRaiz = "/home/ozul6s4w8s9l/public_html/Admin/".$FileName;
         unlink($DestinoUnlinkRaiz);
 
         $DatosProducto = array(
@@ -133,13 +133,13 @@ class Productos extends MY_Controller {
             $FileName = 'Imagen-'.$NombreProducto.'-'.$ClaveProducto.'.jpeg';
             file_put_contents($FileName, $FileData);
             $DestinoUnlink = "C:/xampp/htdocs/DIEZKA/application/images/".$NombreImagen;
-            //$DestinoUnlink = "/home/ozul6s4w8s9l/public_html/DIEZKA/application/images/".$NombreImagen;
+            //$DestinoUnlink = "/home/ozul6s4w8s9l/public_html/Admin/application/images/".$NombreImagen;
             unlink($DestinoUnlink);
             $Destino = "C:/xampp/htdocs/DIEZKA/application/images/".$FileName;
-            //$Destino = "/home/ozul6s4w8s9l/public_html/DIEZKA/application/images/".$FileName;
+            //$Destino = "/home/ozul6s4w8s9l/public_html/Admin/application/images/".$FileName;
             copy($FileName, $Destino); 
             $DestinoUnlinkRaiz = "C:/xampp/htdocs/DIEZKA/".$FileName;
-            //$DestinoUnlinkRaiz = "/home/ozul6s4w8s9l/public_html/DIEZKA/".$FileName;
+            //$DestinoUnlinkRaiz = "/home/ozul6s4w8s9l/public_html/Admin/".$FileName;
             unlink($DestinoUnlinkRaiz);
 
             $DatosProducto = array(
